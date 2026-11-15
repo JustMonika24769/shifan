@@ -33,6 +33,8 @@
 
 5. 访问配置的地址，用管理员密码登录。进入“偏好设置”填写 Bangumi Token 与模型配置。
 
+树莓派 ARM64 镜像会先安装 `libatomic1`，再安装 Playwright 浏览器依赖，避免其内置 Node 因缺少 `libatomic.so.1` 无法启动。若使用旧版 Dockerfile 遇到此错误，同步新版文件后重新执行 `sudo docker compose up -d --build` 即可，无需删除数据目录。
+
 数据存于 `./data`。不要删除 `.env` 中的主密钥，否则无法解密现有服务凭据。管理员密码仅在空库首次启动时初始化，修改环境变量不会直接覆盖已存在的账户。
 
 升级前下载 ZIP 备份，再执行 `docker compose up -d --build`。Alembic 在后端启动时执行迁移。需要回退时使用原版本镜像和对应版本的 ZIP 备份；不要直接让旧代码读取新数据库。
